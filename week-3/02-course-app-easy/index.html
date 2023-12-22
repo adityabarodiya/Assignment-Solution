@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <h1>Welcome to the Course Management System</h1>
+        <div id="admin-section">
+            <h2>Admin Section</h2>
+            <!-- Admin signup form -->
+            <form id="admin-signup-form">
+                <label for="admin-username">Username:</label>
+                <input type="text" id="admin-username" required>
+                <label for="admin-password">Password:</label>
+                <input type="password" id="admin-password" required>
+                <button type="button" onclick="adminSignup()">Sign Up</button>
+            </form>
+            <!-- Admin login form -->
+            <form id="admin-login-form">
+                <label for="admin-login-username">Username:</label>
+                <input type="text" id="admin-login-username" required>
+                <label for="admin-login-password">Password:</label>
+                <input type="password" id="admin-login-password" required>
+                <button type="button" onclick="adminLogin()">Log In</button>
+            </form>
+            <!-- Admin courses section -->
+            <div id="admin-courses-section">
+                <h3>Admin Courses</h3>
+                <!-- Display courses or allow course creation/editing here -->
+            </div>
+        </div>
+        <div id="user-section">
+            <h2>User Section</h2>
+            <!-- User signup form -->
+            <form id="user-signup-form">
+                <label for="user-username">Username:</label>
+                <input type="text" id="user-username" required>
+                <label for="user-password">Password:</label>
+                <input type="password" id="user-password" required>
+                <button type="button" onclick="userSignup()">Sign Up</button>
+            </form>
+            <!-- User login form -->
+            <form id="user-login-form">
+                <label for="user-login-username">Username:</label>
+                <input type="text" id="user-login-username" required>
+                <label for="user-login-password">Password:</label>
+                <input type="password" id="user-login-password" required>
+                <button type="button" onclick="userLogin()">Log In</button>
+            </form>
+            <!-- User courses section -->
+            <div id="user-courses-section">
+                <h3>User Courses</h3>
+                <!-- Display courses or allow course purchase here -->
+            </div>
+            <!-- User purchased courses section -->
+            <div id="user-purchased-courses-section">
+                <h3>Purchased Courses</h3>
+                <!-- Display purchased courses here -->
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
