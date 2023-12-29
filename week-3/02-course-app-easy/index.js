@@ -51,7 +51,7 @@ app.post("/admin/courses", adminAuthentication, (req, res) => {
   const course = req.body;
   course.id = Date.now();
   COURSES.push(course);
-  
+
   res.json({ massage: "Course created succesfully", Courseid: course.id });
 });
 
