@@ -138,7 +138,7 @@ app.post('/users/courses/:courseId', authenticateJwt, async (req, res) => {
     if (user) {
       user.purchasedCourses.push(course);
       await user.save();
-      res.json({ message: 'Course purchased successfully' });
+      res.json({ message: 'Course purchased successfully'});
     } else {
       res.status(403).json({ message: 'User not found' });
     }

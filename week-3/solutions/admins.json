@@ -1,1 +1,9 @@
-[{"username":"harkirat1@gmail.com","password":"123456"},{"username":"harkirat1@gmail1.com","password":"123456"}]
+[
+  { "username": "harkirat1@gmail.com", "password": "123456" },
+  { "username": "harkirat1@gmail1.com", "password": "123456" },
+  { "username": "aditya@gmail.com", "password": "barodiya" },
+  { "username": "aditya barodiya", "password": "" },
+  { "username": "tinni", "password": "klksjdfljsd" },
+  { "username": "adityabarodiya", "password": "111111111111" },
+  { "username": "jgj,gjgiujk", "password": "kjhkhkj" }
+]
