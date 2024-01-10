@@ -50,14 +50,16 @@ We will be covering this in the extra class next week but would be good for you 
    Description: Lists all the courses purchased by the user.
    Input: Headers: { 'Authorization': 'Bearer jwt_token_here' }
    Output: { purchasedCourses: [ { id: 1, title: 'course title', description: 'course description', price: 100, imageLink: 'https://linktoimage.com', published: true }, ... ] }
-
+   
 */
 
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
+const cors = require("cors");
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 
 const userSchema = new mongoose.Schema({
@@ -75,8 +77,6 @@ const courseSchema = new mongoose.Schema({
   title: String,
   description: String,
   price: Number,
-  imageLink: String,
-  published: Boolean,
 });
 // Define mongoose models
 const User = mongoose.model("User", userSchema);
@@ -84,7 +84,7 @@ const Admin = mongoose.model("Admin", adminSchema);
 const Course = mongoose.model("Course", courseSchema);
 
 mongoose.connect(
-  "mongodb+srv://adityabarodiya:xJgDIkvrklyd04Mt@cluster0.m6xjsds.mongodb.net/",
+  "mongodb+srv://adityabarodiya:xJgDIkvrklyd04Mt@cluster0.m6xjsds.mongodb.net/courses",
   { useNewUrlParser: true, useUnifiedTopology: true, dbName: "courses" }
 );
 
@@ -94,7 +94,7 @@ const authenticateJwt = (req, res, next) => {
   const authHeader = req.headers.authorization;
   if (authHeader) {
     const token = authHeader.split(" ")[1];
-    jwt.verify(token, secretKey, (err, user) => {
+    jwt.verify(token, SECRET, (err, user) => {
       if (err) return res.sendStatus(403);
       else {
         req.user = user;
@@ -140,7 +140,7 @@ app.post("/admin/login", async (req, res) => {
 app.post("/admin/courses", authenticateJwt, async (req, res) => {
   // logic to create a course
   const course = new Course(req.body);
-  await Course.save();
+  await course.save();
   res.json({ message: "Course created successfully", courseId: course.id });
 });
 
@@ -166,10 +166,10 @@ app.get("/admin/courses", async (req, res) => {
 app.post("/users/signup", async (req, res) => {
   // logic to sign up user
   const { username, password } = req.body;
-  const user = User.find({ username });
-  if (user) {
-    res.status(403).json({ massage: "User already exits !!!" });
-  } else {
+  const user = await User.findOne({ username });
+
+  if (user) res.status(403).json({ massage: "User already exits !!!" });
+  else {
     const newUser = new User({ username, password });
     newUser.save();
     const token = jwt.sign({ username, role: "user" }, SECRET, {
@@ -210,13 +210,15 @@ app.post("/users/courses/:courseId", authenticateJwt, async (req, res) => {
   } else res.status(404).json({ message: "Course not found" });
 });
 
-app.get("/users/purchasedCourses", authenticateJwt,async(req, res) => {
+app.get("/users/purchasedCourses", authenticateJwt, async (req, res) => {
   // logic to view purchased courses
-  const user = await User.findOne({ username: req.user.username }).populate('purchasedCourses');
+  const user = await User.findOne({ username: req.user.username }).populate(
+    "purchasedCourses"
+  );
   if (user) {
     res.json({ purchasedCourses: user.purchasedCourses || [] });
   } else {
-    res.status(403).json({ message: 'User not found' });
+    res.status(403).json({ message: "User not found" });
   }
 });
 
